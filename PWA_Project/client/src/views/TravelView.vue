@@ -15,12 +15,15 @@ let toFilter = ref(null);
 let cityFilter = ref(null);
 
 let slide = ref(null);
-let filteredTours = ref(null);
 
 const filterValues = () => {
-  tours.value = tours.value.filter(({ city, start_date, end_date }) =>
-    city.includes(cityFilter.value),
-  );
+  if (cityFilter.value && toFilter.value && fromFilter.value)
+    tours.value = tours.value.filter(
+      ({ city, start_date, end_date }) =>
+        city.includes(cityFilter.value) &&
+        start_date >= fromFilter.value &&
+        end_date <= toFilter.value,
+    );
 };
 
 const resetValues = () => {
