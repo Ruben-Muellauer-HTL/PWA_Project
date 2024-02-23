@@ -1,10 +1,15 @@
 <script setup>
+import { ref } from 'vue';
+import TourDialog from './TourDialog.vue';
+
 defineProps({ t: Object });
+
+const isActive = ref(false);
 </script>
 
 <template>
   <q-card style="width: 20rem" flat bordered class="q-ma-lg">
-    <q-img :src="`http://localhost:3000${t.image}`" height="200px" />
+    <q-img :src="`http://localhost:3000${t.image}`" height="200px" @click="isActive = !isActive" />
 
     <q-card-section>
       <q-btn
@@ -43,7 +48,8 @@ defineProps({ t: Object });
 
     <q-card-actions>
       <q-btn flat round icon="event" />
-      <q-btn flat color="primary"> Explore Details </q-btn>
+      <q-btn flat color="primary" :to="`/travel/${t.tid}`"> Explore Details </q-btn>
     </q-card-actions>
   </q-card>
+  <TourDialog :t="t" v-model="isActive"></TourDialog>
 </template>

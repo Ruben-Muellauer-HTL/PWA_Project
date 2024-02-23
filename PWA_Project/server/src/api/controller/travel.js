@@ -1,4 +1,4 @@
-import { dbGetCustomers, dbGetTours } from '../models/travel.js';
+import { dbGetCustomers, dbGetTours, dbGetTourDetail } from '../models/travel.js';
 
 const getCustomers = async (req, res) => {
   const { rows } = await dbGetCustomers();
@@ -10,4 +10,10 @@ const getTours = async (req, res) => {
   res.status(200).json(rows);
 };
 
-export { getCustomers, getTours };
+const getTourDetail = async (req, res) => {
+  const { id } = req.params;
+  const { rows } = await dbGetTourDetail(id);
+  res.status(200).json(rows);
+};
+
+export { getCustomers, getTours, getTourDetail };

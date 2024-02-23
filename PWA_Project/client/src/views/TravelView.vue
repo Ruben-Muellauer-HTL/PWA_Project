@@ -1,37 +1,30 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import { useTravelStore } from '../stores/travelStore.js';
 import { storeToRefs } from 'pinia';
 import TourCard from '../components/TourCard.vue';
+import TourDialog from '../components/TourDialog.vue';
 
 const travelStore = useTravelStore();
 
 const { tours } = storeToRefs(travelStore);
 
-onMounted(() => travelStore.fetchTours());
+travelStore.fetchTours();
 
-let fromFilter = ref(null);
-let toFilter = ref(null);
-let cityFilter = ref(null);
+let fromFilter = ref(new Date().toJSON().slice(0, 10));
+let toFilter = ref('2099-12-12');
+let cityFilter = ref('');
 
 let slide = ref(null);
 
-const filterValues = () => {
-  if (cityFilter.value && toFilter.value && fromFilter.value)
-    tours.value = tours.value.filter(
-      ({ city, start_date, end_date }) =>
-        city.includes(cityFilter.value) &&
-        start_date >= fromFilter.value &&
-        end_date <= toFilter.value,
-    );
-};
-
-const resetValues = () => {
-  toFilter.value = null;
-  fromFilter.value = null;
-  cityFilter.value = null;
-  travelStore.fetchTours();
-};
+const filteredTours = computed(() => {
+  return tours.value.filter(
+    ({ city, start_date, end_date }) =>
+      city.includes(cityFilter.value) &&
+      start_date >= fromFilter.value &&
+      end_date <= toFilter.value,
+  );
+});
 </script>
 
 <template>
@@ -65,18 +58,6 @@ const resetValues = () => {
         </template>
       </q-input>
     </q-form>
-    <div class="row justify-center q-mb-md">
-      <q-btn rounded class="bg-secondary text-white" style="height: 1rem" @click="filterValues()"
-        >Search</q-btn
-      >
-      <q-btn
-        rounded
-        class="bg-secondary text-white q-ml-sm"
-        style="height: 1rem"
-        @click="resetValues"
-        >Reset</q-btn
-      >
-    </div>
   </div>
 
   <div>
@@ -100,6 +81,6 @@ const resetValues = () => {
   </div>
 
   <div class="flex justify-center">
-    <TourCard v-for="t in tours" :key="t" :t="t"></TourCard>
+    <TourCard v-for="t in filteredTours" :key="t" :t="t"></TourCard>
   </div>
 </template>
