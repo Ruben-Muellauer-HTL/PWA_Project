@@ -1,9 +1,8 @@
 <script setup>
-import { ref, onMounted, computed } from 'vue';
+import { ref, computed } from 'vue';
 import { useTravelStore } from '../stores/travelStore.js';
 import { storeToRefs } from 'pinia';
 import TourCard from '../components/TourCard.vue';
-import TourDialog from '../components/TourDialog.vue';
 
 const travelStore = useTravelStore();
 

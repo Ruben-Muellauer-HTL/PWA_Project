@@ -1,9 +1,4 @@
-import { dbGetCustomers, dbGetTours, dbGetTourDetail } from '../models/travel.js';
-
-const getCustomers = async (req, res) => {
-  const { rows } = await dbGetCustomers();
-  res.status(200).json(rows);
-};
+import { dbGetTours, dbGetTourDetail, dbBookTour, dbGetCustomerInfo } from '../models/travel.js';
 
 const getTours = async (req, res) => {
   const { rows } = await dbGetTours();
@@ -16,4 +11,24 @@ const getTourDetail = async (req, res) => {
   res.status(200).json(rows);
 };
 
-export { getCustomers, getTours, getTourDetail };
+const bookTour = async (req, res) => {
+  const { cid, tid } = req.body;
+  try {
+    const { rows } = await dbBookTour(cid, tid);
+    res.status(200).json(rows);
+  } catch (err) {
+    console.log(err.message);
+  }
+};
+
+const getCustomerInfo = async (req, res) => {
+  const { cid } = req.params;
+  try {
+    const { rows } = await dbGetCustomerInfo(cid);
+    res.status(200).json(rows);
+  } catch (err) {
+    console.log(err.message);
+  }
+};
+
+export { getTours, getTourDetail, bookTour, getCustomerInfo };

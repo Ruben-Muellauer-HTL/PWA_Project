@@ -1,5 +1,14 @@
-GET http://localhost:3000/customers
-###
+
 GET http://localhost:3000/tours
 ###
 GET http://localhost:3000/tours/3
+###
+POST http://localhost:3000/tour
+Content-Type: application/json
+
+{
+  "cid": 4,
+  "tid": 4
+}
+###
+GET http://localhost:3000/customer/3
