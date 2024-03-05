@@ -35,8 +35,17 @@ const tab = ref('info');
 
         <q-tab-panels v-model="tab" animated>
           <q-tab-panel name="info">
-            <div class="text-h6">Informations from your account</div>
-            {{ customerInfo }}
+            <div class="text-center column items-center">
+              <span class="text-h5">Informations from your account</span>
+              <q-icon class="fa-solid fa-user q-mt-md" color="secondary" size="xl"></q-icon>
+              <span class="text-h6">{{ customerInfo.username }}</span>
+              <div class="column items-left q-mt-md">
+                <span><b>Name:</b> {{ customerInfo.firstname }} {{ customerInfo.lastname }}</span>
+                <span class="q-ml-md"><b>Email:</b> {{ customerInfo.email }}</span>
+                <span><b>City: </b> {{ customerInfo.city }} {{ customerInfo.plz }}</span>
+                <span><b>Street: </b> {{ customerInfo.street }}</span>
+              </div>
+            </div>
           </q-tab-panel>
 
           <q-tab-panel name="booked">
