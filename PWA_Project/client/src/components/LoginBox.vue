@@ -129,7 +129,7 @@ const onReset = () => {
                   :rules="[(val) => (val && val.length > 0) || 'Please type something']"
                 />
                 <div class="row">
-                  <div class="col">
+                  <div class="col-2">
                     <q-input
                       filled
                       v-model="city"
@@ -139,22 +139,22 @@ const onReset = () => {
                       :rules="[(val) => (val && val.length > 0) || 'Please type something']"
                     />
                   </div>
-                  <div class="col">
+                  <div class="col-4 offset-2">
                     <q-input
                       filled
                       v-model="street"
                       label="Street"
-                      class="q-mt-md q-ml-xl"
+                      class="q-mt-md"
                       lazy-rules
                       :rules="[(val) => (val && val.length > 0) || 'Please type something']"
                     />
                   </div>
-                  <div class="col">
+                  <div class="col-2 offset-2">
                     <q-input
                       filled
                       v-model="plz"
                       label="PLZ"
-                      class="q-mt-md q-ml-xl"
+                      class="q-mt-md"
                       lazy-rules
                       :rules="[(val) => (val && val.length > 0) || 'Please type something']"
                     />
