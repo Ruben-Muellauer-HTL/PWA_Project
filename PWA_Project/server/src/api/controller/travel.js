@@ -35,9 +35,9 @@ const bookTour = async (req, res) => {
 };
 
 const getCustomerInfo = async (req, res) => {
-  const { cid } = req.params;
+  const { username } = req.params;
   try {
-    const { rows } = await dbGetCustomerInfo(cid);
+    const { rows } = await dbGetCustomerInfo(username);
     res.status(200).json(rows);
   } catch (err) {
     console.log(err.message);

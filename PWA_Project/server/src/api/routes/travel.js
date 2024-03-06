@@ -19,7 +19,7 @@ router.get('/tours/:id', asyncHandler(getTourDetail));
 
 router.post('/tour', asyncHandler(bookTour));
 
-router.get('/customer/:cid', asyncHandler(getCustomerInfo));
+router.get('/customer/:username', asyncHandler(getCustomerInfo));
 
 router.get('/customer/tours/:id', asyncHandler(getCustomerTours));
 

@@ -11,7 +11,7 @@ Content-Type: application/json
   "tid": 4
 }
 ###
-GET http://localhost:3000/customer/3
+GET http://localhost:3000/customer/OnFireFrog
 ###
 GET http://localhost:3000/customer/tours/3
 ###

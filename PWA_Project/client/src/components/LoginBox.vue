@@ -101,12 +101,6 @@ const onSubmit = () => {
                   :rules="[(val) => (val && val.length > 0) || 'Please type something']"
                 />
 
-                <q-toggle
-                  v-model="toggleActive"
-                  label="I accept the license and terms"
-                  class="q-mt-md"
-                />
-
                 <div class="q-mt-md row justify-between">
                   <q-btn label="Login" type="submit" color="primary" />
                   <q-btn label="Reset" type="reset" class="q-ml-sm" color="negative" />

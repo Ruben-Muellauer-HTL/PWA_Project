@@ -2,12 +2,17 @@
 import { useTravelStore } from '../stores/travelStore.js';
 import { storeToRefs } from 'pinia';
 import { useRoute } from 'vue-router';
+import { useUserStore } from '../stores/userStore.js';
 import { notifySuccess, notifyWarning } from '../composable/notify.js';
 
 const route = useRoute();
 
 const travelStore = useTravelStore();
 const { tour } = storeToRefs(travelStore);
+
+const userStore = useUserStore();
+const { username } = storeToRefs(userStore);
+
 travelStore.getTour(route.params.id);
 
 const bookTour = (id) => {
@@ -32,7 +37,7 @@ const bookTour = (id) => {
   <div class="column items-center">
     <div class="column text-center items-center bg-positive q-pt-md q-pb-md q-ma-sm infoCard">
       <q-icon class="fa-solid fa-globe" size="xl" color="primary"></q-icon>
-      <span class="q-mt-md">Availabe space: {{ tour.space }}</span>
+      <span class="q-mt-md">Availabe Space: {{ tour.space }}</span>
       <span>{{ tour.type }} - ({{ tour.model }})</span>
     </div>
     <div class="row justify-center">
@@ -55,7 +60,7 @@ const bookTour = (id) => {
       </div>
     </div>
   </div>
-  <div class="row justify-center q-mt-lg q-mb-md">
+  <div class="row justify-center q-mt-lg q-mb-md" v-if="username">
     <q-btn class="bg-positive" @click="bookTour(tour.tid)">Book Now</q-btn>
   </div>
 </template>

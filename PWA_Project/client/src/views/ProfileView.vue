@@ -14,12 +14,11 @@ const { username } = storeToRefs(userStore);
 
 const cityFilter = ref('');
 
-travelStore.getCustomerInfo(4);
+travelStore.getCustomerInfo(username.value);
 travelStore.getCustomerTours(4);
 
 const cancelTour = (val) => {
   try {
-    console.log(val);
     travelStore.deleteTour(4, val);
     notifySuccess('The Tour has now been canceled!');
   } catch {
@@ -35,6 +34,7 @@ const tab = ref('info');
 </script>
 
 <template>
+  {{ customerInfo }}
   <div v-if="username">
     {{ customerInfo }}
     <div class="text-center q-mt-lg text-h3 text-secondary"></div>
@@ -93,4 +93,16 @@ const tab = ref('info');
       </div>
     </div>
   </div>
+  <div v-if="!username" class="row justify-center items-center" style="height: 90vh">
+    <div class="bg-negative text-white text-center box items-center row justify-center">
+      <span class="text-h6">You need to Login to view this page!</span>
+    </div>
+  </div>
 </template>
+<style scoped lang="scss">
+.box {
+  height: 10rem;
+  width: 30rem;
+  border-radius: 10px;
+}
+</style>

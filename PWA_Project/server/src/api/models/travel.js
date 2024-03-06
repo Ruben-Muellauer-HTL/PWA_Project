@@ -27,7 +27,7 @@ const dbGetCustomerInfo = (customer) =>
   query(
     `select *
 from customer
-where cid = $1`,
+where username = $1`,
     [customer],
   );
 

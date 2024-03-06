@@ -6,14 +6,6 @@ import axios from 'axios';
 
 export const useUserStore = defineStore('userStore', () => {
   const username = ref();
-  const checkLogin = async () => {
-    const { data } = await axios.get('http://localhost:3000/steam/currentlyLoggedIn');
-    if (data.login) {
-      username.value = data.user;
-    } else {
-      username.value = null;
-    }
-  };
   const login = async (user, password) => {
     const { data: res } = await axios.post('http://localhost:3000/customer/login', {
       username: user,
@@ -25,5 +17,5 @@ export const useUserStore = defineStore('userStore', () => {
     return res.login;
   };
 
-  return { username, checkLogin, login };
+  return { username, login };
 });

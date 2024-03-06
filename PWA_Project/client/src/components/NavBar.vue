@@ -1,8 +1,24 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import SideBar from './SideBar.vue';
 import LoginBox from './LoginBox.vue';
 import { showLoginForm, hasToLogin } from '../utils/dialogToggle.js';
+
+const update = ref(false);
+
+onMounted(async () => {
+  const registration = await navigator.serviceWorker.getRegistration();
+  if (registration) {
+    registration.addEventListener('updatefound', () => (update.value = true));
+    if (registration.skipWaiting) update.value = true;
+  }
+});
+
+const updateWorker = async () => {
+  const registration = await navigator.serviceWorker.getRegistration();
+  if (registration) registration.waiting?.postMessage({ type: 'SKIP_WAITING' });
+  window.location.reload();
+};
 
 const rightDrawerOpen = ref(false);
 
@@ -14,6 +30,7 @@ const toggleRightDrawer = () => (rightDrawerOpen.value = !rightDrawerOpen.value)
     <q-toolbar>
       <q-toolbar-title> GlobeVista </q-toolbar-title>
 
+      <q-btn class="q-mr-md bg-negative" v-if="update" @click="updateWorker">Update Now!</q-btn>
       <q-btn
         flat
         color="warning"
