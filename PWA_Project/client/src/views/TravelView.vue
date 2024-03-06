@@ -80,6 +80,6 @@ const filteredTours = computed(() => {
   </div>
 
   <div class="flex justify-center">
-    <TourCard v-for="t in filteredTours" :key="t" :t="t"></TourCard>
+    <TourCard v-for="t in filteredTours" :key="t" :t="t" :del="false"></TourCard>
   </div>
 </template>

@@ -30,5 +30,25 @@ export const useTravelStore = defineStore('travelStore', () => {
     customerInfo.value = data[0];
   };
 
-  return { tours, tour, customerInfo, fetchTours, getTour, bookTour, getCustomerInfo };
+  const getCustomerTours = async (customer) => {
+    const { data } = await axios.get(`http://localhost:3000/customer/tours/${customer}`);
+    tours.value = data;
+  };
+
+  const deleteTour = async (cid, tid) => {
+    await axios.delete(`http://localhost:3000/tour?customer=${cid}&tour=${tid}`);
+    getCustomerTours(cid);
+  };
+
+  return {
+    tours,
+    tour,
+    customerInfo,
+    fetchTours,
+    getTour,
+    bookTour,
+    getCustomerInfo,
+    getCustomerTours,
+    deleteTour,
+  };
 });

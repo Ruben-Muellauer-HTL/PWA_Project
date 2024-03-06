@@ -2,7 +2,8 @@
 import { ref } from 'vue';
 import TourDialog from './TourDialog.vue';
 
-defineProps({ t: Object });
+defineProps({ t: Object, del: Boolean });
+const emits = defineEmits('del');
 
 const isActive = ref(false);
 </script>
@@ -47,8 +48,16 @@ const isActive = ref(false);
     <q-separator />
 
     <q-card-actions>
-      <q-btn flat round icon="event" />
-      <q-btn flat color="primary" :to="`/travel/${t.tid}`"> Explore Details </q-btn>
+      <div class="row justify-center">
+        <div>
+          <q-btn flat round icon="event" />
+          <q-btn flat color="primary" :to="`/travel/${t.tid}`"> Explore Details </q-btn>
+        </div>
+        <div v-if="del">
+          <q-btn flat round icon="warning" />
+          <q-btn flat color="negative" @click="emits('del', t.tid)"> Cancel Tour </q-btn>
+        </div>
+      </div>
     </q-card-actions>
   </q-card>
   <TourDialog :t="t" v-model="isActive"></TourDialog>

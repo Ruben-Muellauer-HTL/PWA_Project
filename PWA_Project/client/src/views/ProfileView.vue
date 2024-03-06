@@ -1,20 +1,38 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { useTravelStore } from '../stores/travelStore.js';
 import { storeToRefs } from 'pinia';
+import TourCard from '../components/TourCard.vue';
+import { notifySuccess, notifyWarning } from '../composable/notify.js';
 
 const travelStore = useTravelStore();
-const { customerInfo } = storeToRefs(travelStore);
+const { customerInfo, tours } = storeToRefs(travelStore);
+
+const cityFilter = ref('');
 
 travelStore.getCustomerInfo(4);
+travelStore.getCustomerTours(4);
+
+const cancelTour = (val) => {
+  try {
+    console.log(val);
+    travelStore.deleteTour(4, val);
+    notifySuccess('The Tour has now been canceled!');
+  } catch {
+    notifyWarning('Something went wrong! Try again later!');
+  }
+};
+
+const filteredTours = computed(() => {
+  return tours.value.filter(({ city }) => city.includes(cityFilter.value));
+});
 
 const tab = ref('info');
 </script>
 
 <template>
-  <div class="text-center q-mt-lg text-h3 text-secondary">
-    <span>Explore your own profile</span>
-  </div>
+  {{ customerInfo }}
+  <div class="text-center q-mt-lg text-h3 text-secondary"></div>
   <div class="row justify-center q-mt-xl">
     <div class="q-gutter-y-md" style="width: 100rem">
       <q-card>
@@ -49,8 +67,21 @@ const tab = ref('info');
           </q-tab-panel>
 
           <q-tab-panel name="booked">
-            <div class="text-h6">Alarms</div>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            <div class="text-h6 text-center"><span>Your booked tours</span></div>
+            <div>
+              <q-form class="q-gutter-md q-pa-md row justify-center">
+                <q-input rounded standout label="City" v-model="cityFilter"
+              /></q-form>
+            </div>
+            <div class="row justify-center">
+              <TourCard
+                v-for="t in filteredTours"
+                :t="t"
+                :key="t.tid"
+                :del="true"
+                @del="cancelTour"
+              ></TourCard>
+            </div>
           </q-tab-panel>
         </q-tab-panels>
       </q-card>
