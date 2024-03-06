@@ -3,14 +3,30 @@ import morgan from 'morgan';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import path from 'path';
+import session from 'express-session';
 import travelRoute from './api/routes/travel.js';
 import { errorHandler, notFoundHandler } from './error/errorHandler.js';
 
 dotenv.config();
 
+const { NODE_ENV, SESSION_LIFETIME, SESSION_SECRET } = process.env;
+
 const dirname = path.resolve();
 
 const app = express();
+
+app.use(
+  session({
+    secret: SESSION_SECRET,
+    cookie: {
+      maxAge: 1000 * 60 * 60 * SESSION_LIFETIME,
+      sameSite: 'lax',
+      secure: false,
+    },
+    resave: false,
+    saveUninitialized: false,
+  }),
+);
 
 app.use(morgan('dev'));
 app.use(cors());

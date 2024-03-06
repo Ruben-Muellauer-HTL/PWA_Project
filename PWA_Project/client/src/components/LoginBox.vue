@@ -1,5 +1,12 @@
 <script setup>
 import { ref } from 'vue';
+import { useTravelStore } from '../stores/travelStore.js';
+import { notifySuccess, notifyWarning } from '../composable/notify.js';
+import { showLoginForm, hasToLogin } from '../utils/dialogToggle.js';
+import { useUserStore } from '../stores/userStore.js';
+
+const travelStore = useTravelStore();
+const customerStore = useUserStore();
 
 const username = ref('');
 const password = ref('');
@@ -8,9 +15,11 @@ const lastname = ref('');
 const email = ref('');
 const street = ref('');
 const city = ref('');
-const plz = ref('');
+const plz = ref(null);
 
 const toggleActive = ref(false);
+
+const errMessage = ref(null);
 
 const tab = ref('login');
 
@@ -18,6 +27,37 @@ const onReset = () => {
   username.value = '';
   password.value = '';
   toggleActive.value = false;
+  firstname.value = '';
+  lastname.value = '';
+  password.value = '';
+  email.value = '';
+  street.value = '';
+  city.value = '';
+  plz.value = null;
+};
+
+const onRegister = async () => {
+  errMessage.value = await travelStore.addCustomer(
+    firstname.value,
+    lastname.value,
+    username.value,
+    password.value,
+    email.value,
+    plz.value,
+    street.value,
+    city.value,
+  );
+  if (errMessage.value) notifyWarning(errMessage.value);
+  else {
+    notifySuccess('You now have your own Account!');
+    hasToLogin.value = false;
+    showLoginForm.value = false;
+    onReset();
+  }
+};
+
+const onSubmit = () => {
+  customerStore.login(username.value, password.value);
 };
 </script>
 
@@ -152,6 +192,7 @@ const onReset = () => {
                   <div class="col-2 offset-2">
                     <q-input
                       filled
+                      type="number"
                       v-model="plz"
                       label="PLZ"
                       class="q-mt-md"
@@ -179,3 +220,10 @@ const onReset = () => {
     </div>
   </q-dialog>
 </template>
+
+<style lang="scss">
+.errorBox {
+  border-radius: 5px;
+  height: 5rem;
+}
+</style>

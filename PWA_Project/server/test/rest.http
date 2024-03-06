@@ -16,3 +16,26 @@ GET http://localhost:3000/customer/3
 GET http://localhost:3000/customer/tours/3
 ###
 DELETE http://localhost:3000/tour?customer=4&tour=7
+###
+POST http://localhost:3000/customer
+Content-Type: application/json
+
+{
+  "firstname": "Ruben",
+  "lastname": "Müllauer",
+  "username": "OnFireFrog",
+  "password": "123456",
+  "email": "muellauer.r19@htlwienwest.at",
+  "plz": 1160,
+  "street": "Lienfeldergasse",
+  "city": "Vienna"
+
+}
+###
+POST http://localhost:3000/customer/login
+Content-Type: application/json
+
+{
+  "username": "OnFireFrog",
+  "password": "123"
+}

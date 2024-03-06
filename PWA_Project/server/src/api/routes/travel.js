@@ -7,6 +7,8 @@ import {
   getCustomerInfo,
   getCustomerTours,
   deleteTour,
+  addCustomer,
+  loginUser,
 } from '../controller/travel.js';
 
 const router = express.Router();
@@ -22,5 +24,9 @@ router.get('/customer/:cid', asyncHandler(getCustomerInfo));
 router.get('/customer/tours/:id', asyncHandler(getCustomerTours));
 
 router.delete('/tour', asyncHandler(deleteTour));
+
+router.post('/customer', asyncHandler(addCustomer));
+
+router.post('/customer/login', asyncHandler(loginUser));
 
 export default router;

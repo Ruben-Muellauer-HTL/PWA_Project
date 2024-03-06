@@ -40,6 +40,23 @@ export const useTravelStore = defineStore('travelStore', () => {
     getCustomerTours(cid);
   };
 
+  const addCustomer = async (firstname, lastname, username, password, email, plz, street, city) => {
+    try {
+      await axios.post('http://localhost:3000/customer', {
+        firstname: firstname,
+        lastname: lastname,
+        username: username,
+        password: password,
+        email: email,
+        plz: plz,
+        street: street,
+        city: city,
+      });
+    } catch (err) {
+      return err.response.data;
+    }
+  };
+
   return {
     tours,
     tour,
@@ -50,5 +67,6 @@ export const useTravelStore = defineStore('travelStore', () => {
     getCustomerInfo,
     getCustomerTours,
     deleteTour,
+    addCustomer,
   };
 });

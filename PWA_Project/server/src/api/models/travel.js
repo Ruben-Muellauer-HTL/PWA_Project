@@ -27,7 +27,6 @@ const dbGetCustomerInfo = (customer) =>
   query(
     `select *
 from customer
-join address a on customer.plz = a.plz
 where cid = $1`,
     [customer],
   );
@@ -55,6 +54,30 @@ where cid = $1
     [customer, tour],
   );
 
+const dbCheckForUser = ({ username }) =>
+  query('select username from customer where username = $1', [username]);
+const dbAddCustomer = (customerInfo) =>
+  query(
+    `insert into customer VALUES
+     ((select(max(cid)) from customer)+1,$1, $2, $3, $4, false, $5, $6, $7, $8);`,
+    [
+      customerInfo.firstname,
+      customerInfo.lastname,
+      customerInfo.username,
+      customerInfo.password,
+      customerInfo.email,
+      customerInfo.plz,
+      customerInfo.street,
+      customerInfo.city,
+    ],
+  );
+
+const dbGetPasswordByUsername = (username) =>
+  query('select password from customer where username = $1', [username]);
+
+const dbGetUserByUsername = (username) =>
+  query('select * from customer where username = $1', [username]);
+
 export {
   dbGetTours,
   dbGetTourDetail,
@@ -62,4 +85,8 @@ export {
   dbGetCustomerInfo,
   dbGetCustomerTours,
   dbDeleteTour,
+  dbAddCustomer,
+  dbCheckForUser,
+  dbGetPasswordByUsername,
+  dbGetUserByUsername,
 };
