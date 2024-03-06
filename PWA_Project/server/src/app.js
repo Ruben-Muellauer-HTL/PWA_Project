@@ -11,8 +11,6 @@ dotenv.config();
 
 const { NODE_ENV, SESSION_LIFETIME, SESSION_SECRET } = process.env;
 
-const dirname = path.resolve();
-
 const app = express();
 
 app.use(
@@ -31,13 +29,14 @@ app.use(
 app.use(morgan('dev'));
 app.use(cors());
 
-app.use(express.static(path.join(dirname, '/public')));
+app.use(express.static(path.join(process.cwd(), '/public')));
+app.use(express.static(path.join(process.cwd(), '/client')));
 
 app.use(express.json());
 
 app.use('/', travelRoute);
-// app.use(notFoundHandler);
-// app.use(errorHandler);
+app.use(notFoundHandler);
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 
