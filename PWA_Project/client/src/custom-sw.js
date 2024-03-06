@@ -39,10 +39,10 @@ const cardImagesRoute = new Route(
 
 registerRoute(cardImagesRoute);
 
-const slideshowImagesRoute = new Route(
-  ({ url }) => /.*slideshow\/.*.jpg/.test(url.pathname),
+const staticImagesRoute = new Route(
+  ({ url }) => /.*staticImages\/.*.jpg/.test(url.pathname),
   new CacheFirst({
-    cacheName: 'slideshow-images-cache',
+    cacheName: 'staticImages-cache',
     plugins: [
       new ExpirationPlugin({
         maxAgeSeconds: 60 * 60 * 24 * 1,
@@ -54,7 +54,7 @@ const slideshowImagesRoute = new Route(
   }),
 );
 
-registerRoute(slideshowImagesRoute);
+registerRoute(staticImagesRoute);
 
 precacheAndRoute(self.__WB_MANIFEST);
 registerRoute(new NavigationRoute(createHandlerBoundToURL('index.html')));

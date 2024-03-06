@@ -71,10 +71,10 @@ const filteredTours = computed(() => {
         transition-prev="slide-right"
         transition-next="slide-left"
       >
-        <q-carousel-slide :name="1" img-src="http://localhost:3000/slideshow/city.jpg" />
-        <q-carousel-slide :name="2" img-src="http://localhost:3000/slideshow/beach.jpg" />
-        <q-carousel-slide :name="3" img-src="http://localhost:3000/slideshow/bike.jpg" />
-        <q-carousel-slide :name="4" img-src="http://localhost:3000/slideshow/luggage.jpg" />
+        <q-carousel-slide :name="1" img-src="http://localhost:3000/staticImages/city.jpg" />
+        <q-carousel-slide :name="2" img-src="http://localhost:3000/staticImages/beach.jpg" />
+        <q-carousel-slide :name="3" img-src="http://localhost:3000/staticImages/bike.jpg" />
+        <q-carousel-slide :name="4" img-src="http://localhost:3000/staticImages/luggage.jpg" />
       </q-carousel>
     </q-responsive>
   </div>

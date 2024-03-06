@@ -6,5 +6,5 @@
       >Travel Now</q-btn
     >
   </div>
-  <q-img src="http://localhost:3000/background.jpg" style="height: 70vh"></q-img>
+  <q-img src="http://localhost:3000/staticImages/background.jpg" style="height: 70vh"></q-img>
 </template>

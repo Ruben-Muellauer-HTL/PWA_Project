@@ -3,7 +3,7 @@
     <span class="text-h3 text-center">Welcome to GlobeVista!</span>
     <div class="row justify-center">
       <q-card style="width: 20rem" class="q-ma-xl">
-        <q-img src="http://localhost:3000/about/why.jpg" />
+        <q-img src="http://localhost:3000/staticImages/why.jpg" />
 
         <q-card-section>
           <div class="text-h6">Warum Wir?</div>
@@ -19,7 +19,7 @@
         </q-card-section>
       </q-card>
       <q-card style="width: 20rem" class="q-ma-xl">
-        <q-img src="http://localhost:3000/about/explore.jpg" />
+        <q-img src="http://localhost:3000/staticImages/explore.jpg" />
 
         <q-card-section>
           <div class="text-h6">Entdecken Sie Mit Uns</div>
@@ -35,7 +35,7 @@
         </q-card-section>
       </q-card>
       <q-card style="width: 20rem" class="q-ma-xl">
-        <q-img src="http://localhost:3000/about/mission.jpg" />
+        <q-img src="http://localhost:3000/staticImages/mission.jpg" />
 
         <q-card-section>
           <div class="text-h6">Unsere Mission</div>
