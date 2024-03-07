@@ -34,9 +34,7 @@ const tab = ref('info');
 </script>
 
 <template>
-  {{ customerInfo }}
   <div v-if="username">
-    {{ customerInfo }}
     <div class="text-center q-mt-lg text-h3 text-secondary"></div>
     <div class="row justify-center q-mt-xl">
       <div class="q-gutter-y-md" style="width: 100rem">
