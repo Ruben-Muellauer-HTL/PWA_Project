@@ -7,8 +7,9 @@ import axios from 'axios';
 export const useUserStore = defineStore('userStore', () => {
   const username = ref();
   const cid = ref();
+
   const checkLogin = async () => {
-    const { data } = await axios.get('http://localhost:3000/customer/checklogin');
+    const { data } = await axios.get('http://localhost:3000/customer/login/checklogin');
     console.log(data);
     if (data.login) {
       username.value = data.user;

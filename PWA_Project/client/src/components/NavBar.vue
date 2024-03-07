@@ -8,11 +8,13 @@ import { useUserStore } from '../stores/userStore.js';
 import { storeToRefs } from 'pinia';
 
 const customerStore = useUserStore();
+const { cid } = storeToRefs(customerStore);
 
 const update = ref(false);
 
 onMounted(async () => {
-  customerStore.checkLogin();
+  await customerStore.checkLogin();
+  if (cid.value) hasToLogin.value = false;
   const registration = await navigator.serviceWorker.getRegistration();
   if (registration) {
     registration.addEventListener('updatefound', () => (update.value = true));

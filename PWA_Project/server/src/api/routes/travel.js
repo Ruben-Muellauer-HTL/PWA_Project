@@ -33,7 +33,7 @@ router.post('/customer/login', asyncHandler(loginUser));
 router.patch('/customer', asyncHandler(updateUsername));
 
 router.get(
-  'customer/checklogin',
+  '/customer/login/checklogin',
   asyncHandler((req, res) => {
     return res.status(200).json({
       login: req.session.user ? true : false,

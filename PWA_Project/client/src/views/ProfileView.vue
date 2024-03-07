@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { useTravelStore } from '../stores/travelStore.js';
 import { useUserStore } from '../stores/userStore.js';
 import { storeToRefs } from 'pinia';
@@ -17,8 +17,14 @@ const newUsername = ref('');
 const prompt = ref(false);
 
 const errorMessage = ref(null);
-// travelStore.getCustomerInfo(username.value);
-// travelStore.getCustomerTours(4);
+
+onMounted(async () => {
+  await userStore.checkLogin();
+  if (cid.value) {
+    travelStore.getCustomerInfo(cid.value);
+    travelStore.getCustomerTours(cid.value);
+  }
+});
 
 const cancelTour = (val) => {
   try {
@@ -48,7 +54,7 @@ const tab = ref('info');
 </script>
 
 <template>
-  <div v-if="username">
+  <div v-if="cid">
     <div class="text-center q-mt-lg text-h3 text-secondary"></div>
     <div class="row justify-center q-mt-xl">
       <div class="q-gutter-y-md" style="width: 100rem">
@@ -112,10 +118,9 @@ const tab = ref('info');
       </div>
     </div>
   </div>
-  <div v-if="!username" class="row justify-center items-center" style="height: 90vh">
+  <div v-if="!cid" class="row justify-center items-center" style="height: 90vh">
     <div class="bg-negative text-white text-center box items-center row justify-center">
       <span class="text-h6">You need to Login to view this page!</span>
-      {{ cid }}
     </div>
   </div>
 

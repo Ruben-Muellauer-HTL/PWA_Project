@@ -21,6 +21,10 @@ export default defineConfig({
         target: 'http://localhost:3000',
         changeOrigin: true,
       },
+      '/profile': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+      },
       // '/tours/:id': {
       //   target: 'http://localhost:3000',
       //   changeOrigin: true,

@@ -1,5 +1,5 @@
 
-GET http://localhost:3000/tours
+get http://localhost:3000/customer/login/checklogin
 ###
 GET http://localhost:3000/tours/3
 ###
@@ -11,7 +11,7 @@ Content-Type: application/json
   "tid": 4
 }
 ###
-GET http://localhost:3000/customer/OnFireFrog
+GET http://localhost:3000/customer/17
 ###
 GET http://localhost:3000/customer/tours/3
 ###

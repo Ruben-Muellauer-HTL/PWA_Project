@@ -39,6 +39,23 @@ const toursDetailRoute = new Route(
 
 registerRoute(toursDetailRoute);
 
+const profileRoute = new Route(
+  ({ url }) => url.pathname.startsWith('/customer/'),
+  new NetworkFirst({
+    cacheName: 'Profile-cache',
+    plugins: [
+      new ExpirationPlugin({
+        maxAgeSeconds: 60 * 60 * 24 * 1,
+      }),
+    ],
+    cacheableResponse: {
+      statuses: [0, 200],
+    },
+  }),
+);
+
+registerRoute(profileRoute);
+
 const cardImagesRoute = new Route(
   ({ url }) => /.*images\/.*.jpg/.test(url.pathname),
   new CacheFirst({
