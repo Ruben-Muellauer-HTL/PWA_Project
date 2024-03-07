@@ -1,7 +1,6 @@
 <script setup>
 import { ref } from 'vue';
 import TourDialog from './TourDialog.vue';
-import { isOnline } from '../utils/onlineTest.js';
 
 defineProps({ t: Object, del: Boolean });
 const emits = defineEmits('del');
@@ -9,6 +8,13 @@ const emits = defineEmits('del');
 const isActive = ref(false);
 const accept = ref(false);
 const verify = ref('');
+
+const confirmCancel = (id) => {
+  if (verify.value === 'confirm') {
+    emits('del', id);
+    accept.value = false;
+  }
+};
 </script>
 
 <template>
@@ -50,7 +56,7 @@ const verify = ref('');
 
     <q-separator />
 
-    <q-card-actions v-if="isOnline">
+    <q-card-actions>
       <div class="row justify-center">
         <div>
           <q-btn flat round icon="event" />
@@ -58,10 +64,33 @@ const verify = ref('');
         </div>
         <div v-if="del">
           <q-btn flat round icon="warning" />
-          <q-btn flat color="negative" @click="emits('del', t.tid)"> Cancel Tour </q-btn>
+          <q-btn flat color="negative" @click="accept = true"> Cancel Tour </q-btn>
         </div>
       </div>
     </q-card-actions>
   </q-card>
   <TourDialog :t="t" v-model="isActive"></TourDialog>
+
+  <q-dialog v-model="accept" persistent>
+    <q-card style="min-width: 350px">
+      <q-card-section>
+        <div class="text-h6 text-negative">Please type "confirm" to cancel this tour!</div>
+      </q-card-section>
+
+      <q-card-section class="q-pt-none">
+        <q-input
+          dense
+          v-model="verify"
+          class="text-success"
+          autofocus
+          @keyup.enter="prompt = false"
+        />
+      </q-card-section>
+
+      <q-card-actions align="right" class="text-primary">
+        <q-btn flat label="Close" v-close-popup />
+        <q-btn flat label="Agree" color="success" @click="confirmCancel(t.tid)" />
+      </q-card-actions>
+    </q-card>
+  </q-dialog>
 </template>

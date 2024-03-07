@@ -14,7 +14,7 @@ import {
   dbUpdateUsername,
 } from '../models/travel.js';
 
-import { ValidateCustomer } from '../validators/travel.js';
+import { ValidateCustomer, ValidateChange } from '../validators/travel.js';
 
 const getTours = async (req, res) => {
   const { rows } = await dbGetTours();
@@ -80,6 +80,7 @@ const addCustomer = async (req, res) => {
 
 const authenticateUser = async (username, pass) => {
   const { rows } = await dbGetPasswordByUsername(username);
+  if (rows.length === 0) return false;
   const a = bcrypt.compareSync(pass, rows[0].password);
   if (!a) return false;
   if (a) return true;
@@ -108,6 +109,10 @@ const loginUser = async (req, res) => {
 const updateUsername = async (req, res) => {
   try {
     const { newUser, oldUser } = req.body;
+
+    const errors = ValidateChange(req.body);
+    if (errors)
+      return res.status(400).send(errors.details.map(({ message }) => message).join(', '));
 
     const { rows: exists } = await dbGetUserByUsername(newUser);
     if (exists.length !== 0) return res.status(404).send('Username already exists');

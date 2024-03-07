@@ -11,7 +11,13 @@ const customer = {
   street: Joi.string().required(),
 };
 
+const change = {
+  newUser: Joi.string().min(5).required(),
+  oldUser: Joi.string().min(5).required(),
+};
+
 const schemaCustomer = Joi.object(customer);
+const schemaChange = Joi.object(change);
 
 const options = {
   abortEarly: false,
@@ -23,5 +29,6 @@ const options = {
 };
 
 const ValidateCustomer = (obj) => schemaCustomer.validate(obj, options).error;
+const ValidateChange = (obj) => schemaChange.validate(obj, options).error;
 
-export { ValidateCustomer };
+export { ValidateCustomer, ValidateChange };

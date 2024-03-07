@@ -17,6 +17,10 @@ export default defineConfig({
         target: 'http://localhost:3000',
         changeOrigin: true,
       },
+      '/tours/': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+      },
       // '/tours/:id': {
       //   target: 'http://localhost:3000',
       //   changeOrigin: true,
@@ -37,7 +41,7 @@ export default defineConfig({
     }),
     VitePWA({
       manifest,
-      includeAssets: ['**/*.{js,css,html,jpg,ico,png,ttf,woff2,sass}'],
+      includeAssets: ['**/*.{js,css,html,svg,jpg,ico,png,ttf,woff2,woff,sass}'],
       strategies: 'injectManifest',
       srcDir: 'src',
       filename: 'custom-sw.js',

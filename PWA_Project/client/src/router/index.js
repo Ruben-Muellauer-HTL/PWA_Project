@@ -36,6 +36,11 @@ const router = createRouter({
       name: 'profile',
       component: ProfileView,
     },
+    {
+      path: '/.catchAll(.*)',
+      name: 'notFound',
+      component: HomeView,
+    },
   ],
 });
 

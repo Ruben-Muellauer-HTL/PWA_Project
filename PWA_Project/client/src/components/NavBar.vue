@@ -3,7 +3,7 @@ import { ref, onMounted } from 'vue';
 import SideBar from './SideBar.vue';
 import LoginBox from './LoginBox.vue';
 import { showLoginForm, hasToLogin } from '../utils/dialogToggle.js';
-import { onlineTest, isOnline } from '../utils/onlineTest.js';
+import { onlineTest, isOnline, toggleDialog } from '../utils/onlineTest.js';
 
 const update = ref(false);
 
@@ -14,8 +14,14 @@ onMounted(async () => {
     if (registration.skipWaiting) update.value = true;
   }
 
-  window.addEventListener('online', () => (isOnline.value = true));
-  window.addEventListener('offline', () => (isOnline.value = false));
+  window.addEventListener('online', () => {
+    isOnline.value = true;
+    toggleDialog.value = false;
+  });
+  window.addEventListener('offline', () => {
+    isOnline.value = false;
+    toggleDialog.value = true;
+  });
   isOnline.value = await onlineTest();
 });
 
@@ -33,10 +39,16 @@ const toggleRightDrawer = () => (rightDrawerOpen.value = !rightDrawerOpen.value)
 <template>
   <q-header elevated class="bg-primary text-white" height-hint="98">
     <q-toolbar>
-      <q-toolbar-title> GlobeVista </q-toolbar-title>
-      <q-btn flat color="negative" v-if="!isOnline"
+      <q-toolbar-title>
+        GlobeVista
+        <q-img
+          src="http://localhost:3000/staticImages/travel.png"
+          class="q-ml-md q-mt-xs q-mb-sm"
+          style="width: 50px"
+      /></q-toolbar-title>
+      <!-- <q-btn flat color="negative" v-if="!isOnline"
         >You are offline! Some functions may be unavailable!</q-btn
-      >
+      > -->
 
       <q-btn class="q-mr-md bg-negative" v-if="update" @click="updateWorker">Update Now!</q-btn>
       <q-btn
@@ -47,9 +59,24 @@ const toggleRightDrawer = () => (rightDrawerOpen.value = !rightDrawerOpen.value)
         v-if="hasToLogin && isOnline"
         >Login</q-btn
       >
-      <q-btn dense flat round icon="menu" @click="toggleRightDrawer" />
+      <q-img
+        src="http://localhost:3000/staticImages/bars-solid.svg"
+        class="q-mt-xs q-mb-sm q-mr-md"
+        style="width: 25px"
+        @click="toggleRightDrawer"
+      />
     </q-toolbar>
   </q-header>
   <SideBar v-model="rightDrawerOpen"></SideBar>
   <LoginBox v-model="showLoginForm"></LoginBox>
+  <q-dialog v-model="toggleDialog" position="top">
+    <q-card style="width: 350px">
+      <q-card-section class="row items-center justify-center no-wrap">
+        <div>
+          <div class="text-weight-bold text-negative q-ml-xl">You are offline!</div>
+          <div class="text-grey q-ml-sm">Some functions may not work!</div>
+        </div>
+      </q-card-section>
+    </q-card>
+  </q-dialog>
 </template>

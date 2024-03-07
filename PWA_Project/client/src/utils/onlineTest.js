@@ -1,6 +1,7 @@
 import { ref } from 'vue';
 
 let isOnline = ref(true);
+let toggleDialog = ref(false);
 
 const onlineTest = async () => {
   try {
@@ -11,4 +12,4 @@ const onlineTest = async () => {
   }
 };
 
-export { onlineTest, isOnline };
+export { onlineTest, isOnline, toggleDialog };
