@@ -14,7 +14,7 @@ export const useUserStore = defineStore('userStore', () => {
     if (res.login) {
       username.value = res.user;
     }
-    return res.login;
+    return res;
   };
 
   return { username, login };

@@ -20,6 +20,7 @@ const plz = ref(null);
 const toggleActive = ref(false);
 
 const errMessage = ref(null);
+const loginSuccess = ref(null);
 
 const tab = ref('login');
 
@@ -52,12 +53,21 @@ const onRegister = async () => {
     notifySuccess('You now have your own Account!');
     hasToLogin.value = false;
     showLoginForm.value = false;
+    errMessage.value = null;
     onReset();
   }
 };
 
-const onSubmit = () => {
-  customerStore.login(username.value, password.value);
+const onSubmit = async () => {
+  loginSuccess.value = await customerStore.login(username.value, password.value);
+  if (loginSuccess.value.login === false) notifyWarning(loginSuccess.value.message);
+  else {
+    notifySuccess(`Hello ${username.value} welcome back!`);
+    hasToLogin.value = false;
+    showLoginForm.value = false;
+    loginSuccess.value = null;
+    onReset();
+  }
 };
 </script>
 
