@@ -22,6 +22,23 @@ const toursRoute = new Route(
 
 registerRoute(toursRoute);
 
+// const toursDetailRoute = new Route(
+//   ({ url }) => url.pathname === '/tours/:id',
+//   new NetworkFirst({
+//     cacheName: 'toursDetail-cache',
+//     plugins: [
+//       new ExpirationPlugin({
+//         maxAgeSeconds: 60 * 60 * 24 * 1,
+//       }),
+//     ],
+//     cacheableResponse: {
+//       statuses: [0, 200],
+//     },
+//   }),
+// );
+
+// registerRoute(toursDetailRoute);
+
 const cardImagesRoute = new Route(
   ({ url }) => /.*images\/.*.jpg/.test(url.pathname),
   new CacheFirst({

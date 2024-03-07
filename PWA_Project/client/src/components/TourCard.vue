@@ -1,11 +1,14 @@
 <script setup>
 import { ref } from 'vue';
 import TourDialog from './TourDialog.vue';
+import { isOnline } from '../utils/onlineTest.js';
 
 defineProps({ t: Object, del: Boolean });
 const emits = defineEmits('del');
 
 const isActive = ref(false);
+const accept = ref(false);
+const verify = ref('');
 </script>
 
 <template>
@@ -47,7 +50,7 @@ const isActive = ref(false);
 
     <q-separator />
 
-    <q-card-actions>
+    <q-card-actions v-if="isOnline">
       <div class="row justify-center">
         <div>
           <q-btn flat round icon="event" />

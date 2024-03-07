@@ -4,6 +4,7 @@ import { storeToRefs } from 'pinia';
 import { useRoute } from 'vue-router';
 import { useUserStore } from '../stores/userStore.js';
 import { notifySuccess, notifyWarning } from '../composable/notify.js';
+import { isOnline } from '../utils/onlineTest.js';
 
 const route = useRoute();
 
@@ -11,13 +12,14 @@ const travelStore = useTravelStore();
 const { tour } = storeToRefs(travelStore);
 
 const userStore = useUserStore();
-const { username } = storeToRefs(userStore);
+const { username, cid } = storeToRefs(userStore);
 
 travelStore.getTour(route.params.id);
 
 const bookTour = (id) => {
   try {
-    travelStore.bookTour(4, id);
+    travelStore.bookTour(cid.value, id);
+    travelStore.getCustomerTours(cid.value);
     notifySuccess('Tour was successfully booked!');
   } catch (err) {
     notifyWarning('Tour could not be booked! Try again later!');
@@ -60,7 +62,7 @@ const bookTour = (id) => {
       </div>
     </div>
   </div>
-  <div class="row justify-center q-mt-lg q-mb-md" v-if="username">
+  <div class="row justify-center q-mt-lg q-mb-md" v-if="username || isOnline">
     <q-btn class="bg-positive" @click="bookTour(tour.tid)">Book Now</q-btn>
   </div>
 </template>

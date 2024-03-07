@@ -5,12 +5,13 @@ import { ref } from 'vue';
 
 export const useTravelStore = defineStore('travelStore', () => {
   const tours = ref(null);
+  const allTours = ref(null);
   const tour = ref(null);
   const customerInfo = ref(null);
 
   const fetchTours = async () => {
     const { data } = await axios.get('http://localhost:3000/tours');
-    tours.value = data;
+    allTours.value = data;
   };
 
   const getTour = async (id) => {
@@ -68,5 +69,6 @@ export const useTravelStore = defineStore('travelStore', () => {
     getCustomerTours,
     deleteTour,
     addCustomer,
+    allTours,
   };
 });

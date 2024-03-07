@@ -15,7 +15,7 @@ GET http://localhost:3000/customer/OnFireFrog
 ###
 GET http://localhost:3000/customer/tours/3
 ###
-DELETE http://localhost:3000/tour?customer=4&tour=7
+DELETE http://localhost:3000/tour?customer=3&tour=7
 ###
 POST http://localhost:3000/customer
 Content-Type: application/json
@@ -23,8 +23,8 @@ Content-Type: application/json
 {
   "firstname": "Ruben",
   "lastname": "Müllauer",
-  "username": "OnFireFrog",
-  "password": "123456",
+  "username": "OnFireFrog22",
+  "password": "Heute12",
   "email": "muellauer.r19@htlwienwest.at",
   "plz": 1160,
   "street": "Lienfeldergasse",
@@ -36,6 +36,14 @@ POST http://localhost:3000/customer/login
 Content-Type: application/json
 
 {
-  "username": "OnFireFrog",
-  "password": "123"
+  "username": "OnFireFrog22",
+  "password": "Heute12"
+}
+###
+PATCH http://localhost:3000/customer
+Content-Type: application/json
+
+{
+  "newUser": "alicej",
+  "oldUser": "OnFeuerFrosch"
 }

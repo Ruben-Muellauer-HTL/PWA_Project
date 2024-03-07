@@ -4,9 +4,11 @@ import { useTravelStore } from '../stores/travelStore.js';
 import { notifySuccess, notifyWarning } from '../composable/notify.js';
 import { showLoginForm, hasToLogin } from '../utils/dialogToggle.js';
 import { useUserStore } from '../stores/userStore.js';
+import { storeToRefs } from 'pinia';
 
 const travelStore = useTravelStore();
 const customerStore = useUserStore();
+const { cid } = storeToRefs(customerStore);
 
 const username = ref('');
 const password = ref('');
@@ -51,9 +53,8 @@ const onRegister = async () => {
   if (errMessage.value) notifyWarning(errMessage.value);
   else {
     notifySuccess('You now have your own Account!');
-    hasToLogin.value = false;
-    showLoginForm.value = false;
     errMessage.value = null;
+    tab.value = 'login';
     fetchProfileData();
     onReset();
   }
@@ -73,8 +74,8 @@ const onSubmit = async () => {
 };
 
 const fetchProfileData = () => {
-  travelStore.getCustomerInfo(username.value);
-  travelStore.getCustomerTours(4);
+  travelStore.getCustomerInfo(cid.value);
+  travelStore.getCustomerTours(cid.value);
 };
 </script>
 

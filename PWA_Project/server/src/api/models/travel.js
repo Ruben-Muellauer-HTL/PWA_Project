@@ -27,7 +27,7 @@ const dbGetCustomerInfo = (customer) =>
   query(
     `select *
 from customer
-where username = $1`,
+where cid = $1`,
     [customer],
   );
 
@@ -78,6 +78,12 @@ const dbGetPasswordByUsername = (username) =>
 const dbGetUserByUsername = (username) =>
   query('select * from customer where username = $1', [username]);
 
+const dbUpdateUsername = (oldUsername, newUsername) =>
+  query('update customer set username = $1 where username = $2 returning *', [
+    newUsername,
+    oldUsername,
+  ]);
+
 export {
   dbGetTours,
   dbGetTourDetail,
@@ -89,4 +95,5 @@ export {
   dbCheckForUser,
   dbGetPasswordByUsername,
   dbGetUserByUsername,
+  dbUpdateUsername,
 };

@@ -35,8 +35,8 @@ app.use(express.static(path.join(process.cwd(), '/client')));
 app.use(express.json());
 
 app.use('/', travelRoute);
-app.use(notFoundHandler);
-app.use(errorHandler);
+// app.use(notFoundHandler);
+// app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 

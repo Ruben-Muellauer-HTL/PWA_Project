@@ -10,16 +10,19 @@ const travelStore = useTravelStore();
 const { customerInfo, tours } = storeToRefs(travelStore);
 
 const userStore = useUserStore();
-const { username } = storeToRefs(userStore);
+const { username, cid } = storeToRefs(userStore);
 
 const cityFilter = ref('');
+const newUsername = ref('');
+const prompt = ref(false);
 
+const errorMessage = ref(null);
 // travelStore.getCustomerInfo(username.value);
 // travelStore.getCustomerTours(4);
 
 const cancelTour = (val) => {
   try {
-    travelStore.deleteTour(4, val);
+    travelStore.deleteTour(cid.value, val);
     notifySuccess('The Tour has now been canceled!');
   } catch {
     notifyWarning('Something went wrong! Try again later!');
@@ -29,6 +32,17 @@ const cancelTour = (val) => {
 const filteredTours = computed(() => {
   return tours.value.filter(({ city }) => city.includes(cityFilter.value));
 });
+
+const changeName = async () => {
+  errorMessage.value = await userStore.changeUsername(newUsername.value, username.value);
+  if (errorMessage.value) notifyWarning(errorMessage.value);
+  else {
+    travelStore.getCustomerInfo(cid.value);
+    userStore.login(newUsername.value, customerInfo.password);
+    notifySuccess(`Your new Username is now ${newUsername.value}`);
+    prompt.value = false;
+  }
+};
 
 const tab = ref('info');
 </script>
@@ -59,7 +73,14 @@ const tab = ref('info');
               <div class="text-center column items-center">
                 <span class="text-h5">Informations from your account</span>
                 <q-icon class="fa-solid fa-user q-mt-md" color="secondary" size="xl"></q-icon>
-                <span class="text-h6">{{ customerInfo.username }}</span>
+                <div class="row">
+                  <span class="text-h6">{{ customerInfo.username }}</span>
+                  <q-icon
+                    color="info"
+                    class="fa-solid fa-pen-to-square"
+                    @click="prompt = true"
+                  ></q-icon>
+                </div>
                 <div class="column items-left q-mt-md">
                   <span><b>Name:</b> {{ customerInfo.firstname }} {{ customerInfo.lastname }}</span>
                   <span class="q-ml-md"><b>Email:</b> {{ customerInfo.email }}</span>
@@ -96,6 +117,23 @@ const tab = ref('info');
       <span class="text-h6">You need to Login to view this page!</span>
     </div>
   </div>
+
+  <q-dialog v-model="prompt" persistent>
+    <q-card style="min-width: 350px">
+      <q-card-section>
+        <div class="text-h6">Change your Username</div>
+      </q-card-section>
+
+      <q-card-section class="q-pt-none">
+        <q-input dense v-model="newUsername" autofocus @keyup.enter="prompt = false" />
+      </q-card-section>
+
+      <q-card-actions align="right" class="text-primary">
+        <q-btn flat label="Cancel" v-close-popup />
+        <q-btn flat label="Change" @click="changeName" />
+      </q-card-actions>
+    </q-card>
+  </q-dialog>
 </template>
 <style scoped lang="scss">
 .box {

@@ -6,7 +6,7 @@ import TourCard from '../components/TourCard.vue';
 
 const travelStore = useTravelStore();
 
-const { tours } = storeToRefs(travelStore);
+const { allTours } = storeToRefs(travelStore);
 
 travelStore.fetchTours();
 
@@ -14,10 +14,10 @@ let fromFilter = ref(new Date().toJSON().slice(0, 10));
 let toFilter = ref('2099-12-12');
 let cityFilter = ref('');
 
-let slide = ref(null);
+let slide = ref(1);
 
 const filteredTours = computed(() => {
-  return tours.value.filter(
+  return allTours.value.filter(
     ({ city, start_date, end_date }) =>
       city.includes(cityFilter.value) &&
       start_date >= fromFilter.value &&
@@ -58,7 +58,6 @@ const filteredTours = computed(() => {
       </q-input>
     </q-form>
   </div>
-
   <div>
     <q-responsive :ratio="3">
       <q-carousel
