@@ -4,10 +4,15 @@ import SideBar from './SideBar.vue';
 import LoginBox from './LoginBox.vue';
 import { showLoginForm, hasToLogin } from '../utils/dialogToggle.js';
 import { onlineTest, isOnline, toggleDialog } from '../utils/onlineTest.js';
+import { useUserStore } from '../stores/userStore.js';
+import { storeToRefs } from 'pinia';
+
+const customerStore = useUserStore();
 
 const update = ref(false);
 
 onMounted(async () => {
+  customerStore.checkLogin();
   const registration = await navigator.serviceWorker.getRegistration();
   if (registration) {
     registration.addEventListener('updatefound', () => (update.value = true));

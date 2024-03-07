@@ -7,6 +7,18 @@ import axios from 'axios';
 export const useUserStore = defineStore('userStore', () => {
   const username = ref();
   const cid = ref();
+  const checkLogin = async () => {
+    const { data } = await axios.get('http://localhost:3000/customer/checklogin');
+    console.log(data);
+    if (data.login) {
+      username.value = data.user;
+      cid.value = data.cid;
+    } else {
+      username.value = null;
+      cid.value = null;
+    }
+  };
+
   const login = async (user, pass) => {
     const { data: res } = await axios.post('http://localhost:3000/customer/login', {
       username: user,
@@ -30,5 +42,5 @@ export const useUserStore = defineStore('userStore', () => {
     }
   };
 
-  return { username, cid, login, changeUsername };
+  return { username, cid, login, changeUsername, checkLogin };
 });

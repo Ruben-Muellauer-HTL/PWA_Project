@@ -115,6 +115,7 @@ const tab = ref('info');
   <div v-if="!username" class="row justify-center items-center" style="height: 90vh">
     <div class="bg-negative text-white text-center box items-center row justify-center">
       <span class="text-h6">You need to Login to view this page!</span>
+      {{ cid }}
     </div>
   </div>
 
@@ -131,6 +132,7 @@ const tab = ref('info');
       <q-card-actions align="right" class="text-primary">
         <q-btn flat label="Cancel" v-close-popup />
         <q-btn flat label="Change" @click="changeName" />
+        {{ cid }}
       </q-card-actions>
     </q-card>
   </q-dialog>
