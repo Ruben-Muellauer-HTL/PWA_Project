@@ -10,7 +10,6 @@ export const useUserStore = defineStore('userStore', () => {
 
   const checkLogin = async () => {
     const { data } = await axios.get('http://localhost:3000/customer/login/checklogin');
-    console.log(data);
     if (data.login) {
       username.value = data.user;
       cid.value = data.cid;

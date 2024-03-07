@@ -1,10 +1,12 @@
 <script setup>
-import { ref, computed, onMounted } from 'vue';
+import { db, openDatabase } from '../utils/db';
+import { ref, computed, onMounted, toRaw, watch } from 'vue';
 import { useTravelStore } from '../stores/travelStore.js';
 import { useUserStore } from '../stores/userStore.js';
 import { storeToRefs } from 'pinia';
 import TourCard from '../components/TourCard.vue';
 import { notifySuccess, notifyWarning } from '../composable/notify.js';
+import { onlineTest, isOnline } from '../utils/onlineTest.js';
 
 const travelStore = useTravelStore();
 const { customerInfo, tours } = storeToRefs(travelStore);
@@ -18,20 +20,73 @@ const prompt = ref(false);
 
 const errorMessage = ref(null);
 
+watch(isOnline, () => synchronize(isOnline));
+
 onMounted(async () => {
+  if (!db) await openDatabase();
   await userStore.checkLogin();
   if (cid.value) {
+    isOnline.value = await onlineTest();
     travelStore.getCustomerInfo(cid.value);
-    travelStore.getCustomerTours(cid.value);
+    if (isOnline.value) {
+      await travelStore.getCustomerTours(cid.value);
+      tours.value = tours.value.map((el) => ({ ...el, isDeleted: false }));
+      db.clear('tours');
+      tours.value.forEach((e) => db.put('tours', toRaw(e)));
+    } else {
+      let data = await db.getAll('tours');
+      tours.value = data.filter((el) => !el.isDeleted);
+      return;
+    }
   }
 });
 
-const cancelTour = (val) => {
+const fetchTours = async () => {
+  isOnline.value = await onlineTest();
+  travelStore.getCustomerInfo(cid.value);
+  if (isOnline.value) {
+    travelStore.getCustomerTours(cid.value);
+    tours.value = tours.value.map((el) => ({ ...el, isDeleted: false }));
+
+    db.clear('tours');
+    tours.value.forEach((e) => db.put('tours', toRaw(e)));
+  } else {
+    let data = await db.getAll('tours');
+    tours.value = data.filter((el) => !el.isDeleted);
+    return;
+  }
+};
+
+const cancelTour = async (val) => {
   try {
-    travelStore.deleteTour(cid.value, val);
+    isOnline.value = await onlineTest();
+    if (isOnline.value) {
+      travelStore.deleteTour(cid.value, val);
+      deleteFromIndex(val);
+      fetchTours();
+    } else {
+      let tou = await db.get('tours', parseInt(val));
+      tou.isDeleted = true;
+      db.put('tours', toRaw(tou));
+      fetchTours();
+    }
     notifySuccess('The Tour has now been canceled!');
   } catch {
     notifyWarning('Something went wrong! Try again later!');
+  }
+};
+
+const deleteFromIndex = (id) => {
+  db.delete('tours', id);
+};
+
+const synchronize = async (online) => {
+  if (online.value) {
+    let toDelete = await db.getAll('tours');
+    toDelete.forEach((e) => {
+      if (e.isDeleted == true) cancelTour(e.tid);
+    });
+    fetchTours();
   }
 };
 
