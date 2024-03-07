@@ -54,6 +54,7 @@ const onRegister = async () => {
     hasToLogin.value = false;
     showLoginForm.value = false;
     errMessage.value = null;
+    fetchProfileData();
     onReset();
   }
 };
@@ -66,8 +67,14 @@ const onSubmit = async () => {
     hasToLogin.value = false;
     showLoginForm.value = false;
     loginSuccess.value = null;
+    fetchProfileData();
     onReset();
   }
+};
+
+const fetchProfileData = () => {
+  travelStore.getCustomerInfo(username.value);
+  travelStore.getCustomerTours(4);
 };
 </script>
 

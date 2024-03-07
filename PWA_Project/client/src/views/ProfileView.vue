@@ -14,8 +14,8 @@ const { username } = storeToRefs(userStore);
 
 const cityFilter = ref('');
 
-travelStore.getCustomerInfo(username.value);
-travelStore.getCustomerTours(4);
+// travelStore.getCustomerInfo(username.value);
+// travelStore.getCustomerTours(4);
 
 const cancelTour = (val) => {
   try {
