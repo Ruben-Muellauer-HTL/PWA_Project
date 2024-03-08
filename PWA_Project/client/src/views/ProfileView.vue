@@ -141,11 +141,14 @@ const tab = ref('info');
                 <div class="row">
                   <span class="text-h6">{{ customerInfo.username }}</span>
                 </div>
-                <q-img
-                  src="http://localhost:3000/staticImages/pen-to-square-solid.svg"
-                  style="width: 20px"
-                  @click="prompt = true"
-                />
+                <q-btn flat>
+                  <q-img
+                    src="http://localhost:3000/staticImages/pen-to-square-solid.svg"
+                    style="width: 20px"
+                    @click="prompt = true"
+                  />
+                </q-btn>
+
                 <div class="column items-left q-mt-md">
                   <span><b>Name:</b> {{ customerInfo.firstname }} {{ customerInfo.lastname }}</span>
                   <span class="q-ml-md"><b>Email:</b> {{ customerInfo.email }}</span>

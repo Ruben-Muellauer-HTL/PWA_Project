@@ -66,12 +66,14 @@ const toggleRightDrawer = () => (rightDrawerOpen.value = !rightDrawerOpen.value)
         v-if="hasToLogin && isOnline"
         >Login</q-btn
       >
-      <q-img
-        src="http://localhost:3000/staticImages/bars-solid.svg"
-        class="q-mt-xs q-mb-sm q-mr-md"
-        style="width: 25px"
-        @click="toggleRightDrawer"
-      />
+      <q-btn flat>
+        <q-img
+          src="http://localhost:3000/staticImages/bars-solid.svg"
+          class="q-mt-xs q-mb-sm"
+          style="width: 25px"
+          @click="toggleRightDrawer"
+        />
+      </q-btn>
     </q-toolbar>
   </q-header>
   <SideBar v-model="rightDrawerOpen"></SideBar>
