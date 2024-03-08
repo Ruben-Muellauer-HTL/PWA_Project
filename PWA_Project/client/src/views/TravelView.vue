@@ -32,28 +32,34 @@ const filteredTours = computed(() => {
       <q-input rounded standout label="City" v-model="cityFilter" />
       <q-input rounded standout v-model="fromFilter" mask="date" label="From" :rules="['date']">
         <template v-slot:append>
-          <q-icon name="event" class="cursor-pointer">
-            <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-              <q-date v-model="fromFilter">
-                <div class="row items-center justify-end">
-                  <q-btn v-close-popup label="Close" color="primary" flat />
-                </div>
-              </q-date>
-            </q-popup-proxy>
-          </q-icon>
+          <q-img
+            src="http://localhost:3000/staticImages/calendar-days-solid.svg"
+            class="q-mt-xs q-mb-sm q-mr-md"
+            style="width: 20px"
+          />
+          <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+            <q-date v-model="fromFilter">
+              <div class="row items-center justify-end">
+                <q-btn v-close-popup label="Close" color="primary" flat />
+              </div>
+            </q-date>
+          </q-popup-proxy>
         </template>
       </q-input>
       <q-input rounded standout v-model="toFilter" label="To" mask="date" :rules="['date']">
         <template v-slot:append>
-          <q-icon name="event" class="cursor-pointer">
-            <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-              <q-date v-model="toFilter">
-                <div class="row items-center justify-end">
-                  <q-btn v-close-popup label="Close" color="primary" flat />
-                </div>
-              </q-date>
-            </q-popup-proxy>
-          </q-icon>
+          <q-img
+            src="http://localhost:3000/staticImages/calendar-days-solid.svg"
+            class="q-mt-xs q-mb-sm q-mr-md"
+            style="width: 20px"
+          />
+          <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+            <q-date v-model="toFilter">
+              <div class="row items-center justify-end">
+                <q-btn v-close-popup label="Close" color="primary" flat />
+              </div>
+            </q-date>
+          </q-popup-proxy>
         </template>
       </q-input>
     </q-form>

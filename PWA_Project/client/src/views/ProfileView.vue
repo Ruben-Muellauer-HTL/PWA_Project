@@ -133,15 +133,19 @@ const tab = ref('info');
             <q-tab-panel name="info">
               <div class="text-center column items-center">
                 <span class="text-h5">Informations from your account</span>
-                <q-icon class="fa-solid fa-user q-mt-md" color="secondary" size="xl"></q-icon>
+                <q-img
+                  src="http://localhost:3000/staticImages/user-solid.svg"
+                  class="q-mt-md"
+                  style="width: 30px"
+                />
                 <div class="row">
                   <span class="text-h6">{{ customerInfo.username }}</span>
-                  <q-icon
-                    color="info"
-                    class="fa-solid fa-pen-to-square"
-                    @click="prompt = true"
-                  ></q-icon>
                 </div>
+                <q-img
+                  src="http://localhost:3000/staticImages/pen-to-square-solid.svg"
+                  style="width: 20px"
+                  @click="prompt = true"
+                />
                 <div class="column items-left q-mt-md">
                   <span><b>Name:</b> {{ customerInfo.firstname }} {{ customerInfo.lastname }}</span>
                   <span class="q-ml-md"><b>Email:</b> {{ customerInfo.email }}</span>

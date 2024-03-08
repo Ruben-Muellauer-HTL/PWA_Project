@@ -38,27 +38,28 @@ const bookTour = (id) => {
   </div>
   <div class="column items-center">
     <div class="column text-center items-center bg-positive q-pt-md q-pb-md q-ma-sm infoCard">
-      <q-icon class="fa-solid fa-globe" size="xl" color="primary"></q-icon>
+      <q-img src="http://localhost:3000/staticImages/globe-solid.svg" style="width: 50px" />
       <span class="q-mt-md">Availabe Space: {{ tour.space }}</span>
       <span>{{ tour.type }} - ({{ tour.model }})</span>
     </div>
     <div class="row justify-center">
       <div class="column items-center bg-positive q-pt-md q-pb-md q-ma-sm infoCard">
-        <q-icon class="fa-solid fa-building" size="xl" color="primary"></q-icon>
+        <q-img src="http://localhost:3000/staticImages/building-solid.svg" style="width: 40px" />
         <span class="q-mt-md">{{ tour.name }}</span>
       </div>
       <div class="column items-center bg-positive q-pt-md q-pb-md q-ma-sm infoCard">
-        <q-icon class="fa-solid fa-calendar-days" size="xl" color="primary"></q-icon>
+        <q-img
+          src="http://localhost:3000/staticImages/calendar-days-solid.svg"
+          style="width: 40px"
+        />
         <span class="q-mt-md">{{ tour.start_date }} - {{ tour.end_date }}</span>
       </div>
       <div class="row justify-center items-center bg-positive q-pt-md q-pb-md q-ma-sm infoCard">
-        <q-icon
-          color="warning"
-          size="sm"
-          class="fa-solid fa-star q-ml-sm"
+        <q-img
+          src="http://localhost:3000/staticImages/star-solid.svg"
+          style="width: 30px"
           v-for="s in tour.rating"
-          :key="s"
-        ></q-icon>
+        />
       </div>
     </div>
   </div>

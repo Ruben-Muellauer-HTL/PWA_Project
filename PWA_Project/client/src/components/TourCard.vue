@@ -25,15 +25,23 @@ const confirmCancel = (id) => {
       <q-btn
         fab
         color="negative"
-        icon="place"
         class="absolute"
         style="top: 0; right: 12px; transform: translateY(-50%)"
-      />
+      >
+        <q-img
+          src="http://localhost:3000/staticImages/location-dot-solid_white.svg"
+          class="q-mt-md q-ml-sm absolute"
+          style="top: 10px; right: 18px; transform: translateY(-50%); width: 20px"
+      /></q-btn>
 
       <div class="row no-wrap items-center q-ml-sm">
         <div class="col text-h6 ellipsis">{{ t.city }}</div>
         <div class="col-auto text-grey text-caption q-pt-md row no-wrap items-center">
-          <q-icon name="place" />
+          <q-img
+            src="http://localhost:3000/staticImages/location-dot-solid.svg"
+            class="q-mr-xs"
+            style="width: 10px"
+          />
           {{ t.coordinates }}
         </div>
       </div>
@@ -42,7 +50,12 @@ const confirmCancel = (id) => {
           <span class="text-caption text-grey">({{ t.start_date }} - {{ t.end_date }})</span>
         </div>
         <div>
-          <q-icon color="warning" class="fa-solid fa-star q-ml-sm" v-for="s in t.rating"></q-icon>
+          <q-img
+            src="http://localhost:3000/staticImages/star-solid.svg"
+            class="q-mt-md q-ml-sm"
+            style="width: 20px"
+            v-for="s in t.rating"
+          />
         </div>
       </div>
     </q-card-section>
@@ -59,11 +72,18 @@ const confirmCancel = (id) => {
     <q-card-actions>
       <div class="row justify-center">
         <div>
-          <q-btn flat round icon="event" />
+          <q-img
+            src="http://localhost:3000/staticImages/calendar-days-solid.svg"
+            class="q-mt-xs q-mb-sm q-ml-md q-mr-sm"
+            style="width: 20px"
+          />
           <q-btn flat color="primary" :to="`/travel/${t.tid}`"> Explore Details </q-btn>
         </div>
         <div v-if="del">
-          <q-btn flat round icon="warning" />
+          <q-img
+            src="http://localhost:3000/staticImages/triangle-exclamation-solid.svg"
+            style="width: 20px"
+          />
           <q-btn flat color="negative" @click="accept = true"> Cancel Tour </q-btn>
         </div>
       </div>
